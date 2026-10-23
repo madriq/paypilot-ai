@@ -1,4 +1,4 @@
-﻿# PayPilot AI
+# PayPilot AI
 
 **AI-assisted payment workflows and payment-risk defense using PayPal Sandbox.**
 
@@ -118,7 +118,8 @@ The current payment safety suite contains seven tests covering:
 Build and lint the frontend:
 
 ```powershell
-Set-Location .\frontend
+Set-Location .\backend\frontend
+npm ci
 npm run build
 npm run lint
 ```

@@ -51,7 +51,7 @@ const syncingRef = useRef(false);
 
   // Check unfinished order statuses without capturing any payments.
 
-const syncOrderStatuses = useCallback(async ({ force = false } = {}) => {  if (syncingRef.current) {
+const syncOrderStatuses = useCallback(async () => {  if (syncingRef.current) {
     return null;
   }
 
@@ -72,21 +72,6 @@ const syncOrderStatuses = useCallback(async ({ force = false } = {}) => {  if (s
 
     const results = await Promise.all(
       data.orders.map(async (order) => {
-        if (
-          !force &&
-          verificationStatus[order.order_id]?.verification === "missing"
-        ) {
-          return {
-            id: order.order_id,
-            verification: "missing",
-            orderStatus: null,
-            captureStatus: null,
-            captureReason: null,
-            captureId: null,
-            success: false,
-          };
-        }
-
         try {
           const statusResponse = await fetch(
             `${API_URL}/api/payments/orders/${encodeURIComponent(order.order_id)}`
@@ -95,7 +80,7 @@ const syncOrderStatuses = useCallback(async ({ force = false } = {}) => {  if (s
           if (!statusResponse.ok) {
             return {
               id: order.order_id,
-              verification: statusResponse.status === 404 ? "missing" : "error",
+              verification: "error",
               orderStatus: null,
               captureStatus: null,
               captureReason: null,
@@ -156,7 +141,7 @@ const syncOrderStatuses = useCallback(async ({ force = false } = {}) => {  if (s
   } finally {
     syncingRef.current = false;
   }
-}, [loadTransactions, verificationStatus]);
+}, [loadTransactions]);
 
 
   // Initialize the dashboard and load saved order history.
