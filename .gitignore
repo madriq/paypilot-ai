@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 .venv/
@@ -49,8 +49,6 @@ dist-ssr/
 .DS_Store
 Thumbs.db
 
-# Unused root-level Vite starter; actual app is in backend/frontend
-/frontend/
 
 # Timestamped backup files
 *.backup-*
